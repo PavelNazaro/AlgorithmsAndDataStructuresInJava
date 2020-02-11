@@ -6,15 +6,25 @@ package Lesson2;
 public class Main {
 
     public static void main(String[] args) {
-        MyArray arr = new MyArray(1000000);
-        arr.createArray();
-        arr.showPartArray(5, 20);
-        arr.showPartArray(15, 30);
-        arr.set(15, 777);
-        arr.findIndexInArray(19);
-        arr.delete(19);
-        arr.findIndexInArray(19);
-        arr.showPartArray(5, 20);
-        arr.showPartArray(15, 30);
+        MyArray array = new MyArray(1000000);
+        array.createArray();
+
+        array.showPartArray(5, 20);
+        array.showPartArray(15, 30);
+        array.set(15, 777);
+        array.findIndexInArray(19);
+        array.delete(19);
+        array.findIndexInArray(19);
+        array.showPartArray(5, 20);
+        array.showPartArray(15, 30);
+
+        long time = System.currentTimeMillis();
+        array.showPartArray(0, 30);
+//        array.bubbleSort();
+//        array.selectionSort();
+//        array.insertionSort();
+        array.mergeSort();
+        array.showPartArray(0, 30);
+        System.out.println("Time, ms: " + (System.currentTimeMillis() - time));
     }
 }
