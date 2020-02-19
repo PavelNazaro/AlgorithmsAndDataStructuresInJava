@@ -10,7 +10,6 @@ public class Queue<T> {
         this.queue = (T[]) new Object[size];
         this.front = 0;
         this.rear = -1;
-        this.size = size;
     }
 
     public void enqueue(T item){
