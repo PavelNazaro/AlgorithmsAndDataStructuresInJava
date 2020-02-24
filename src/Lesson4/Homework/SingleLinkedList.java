@@ -77,8 +77,26 @@ public class SingleLinkedList<T> implements Iterable<T> {
     }
 
     public T deleteAt(int index) {
-        //TODO реализовать в качестве ДЗ
-        return null;
+        if (index == 0){
+            return deleteHead();
+        }
+
+        Node<T> curr = head;
+        Node<T> prev = null;
+        for (int i = 0; i < index && curr != null; i++) {
+            prev = curr;
+            curr = curr.next;
+        }
+        if (curr == null) {
+            return deleteTail();
+        }
+
+        T deletedValue = curr.value;
+        if (prev != null) {
+            prev.next = curr.next;
+        }
+
+        return deletedValue;
     }
 
     private Node<T> findPrev(Node<T> node) {
@@ -90,26 +108,23 @@ public class SingleLinkedList<T> implements Iterable<T> {
     }
 
     public void push(T value) {
-        //TODO реализовать в качестве ДЗ
+        insertTail(value);
     }
 
     public T pop() {
-        //TODO реализовать в качестве ДЗ
-        return null;
+        return deleteTail();
     }
 
     public T peek() {
-        //TODO реализовать в качестве ДЗ
-        return null;
+        return tail.value;
     }
 
     public void enqueue(T value) {
-        //TODO реализовать в качестве ДЗ
+        insertHead(value);
     }
 
     public T dequeue() {
-        //TODO реализовать в качестве ДЗ
-        return null;
+        return deleteTail();
     }
 
     @Override
@@ -168,6 +183,48 @@ public class SingleLinkedList<T> implements Iterable<T> {
         singleLinkedList.deleteTail();
         singleLinkedList.deleteHead();
         singleLinkedList.deleteTail();
+        singleLinkedList.deleteHead();
+
+        System.out.println("After delete all");
+        singleLinkedList.forEach(System.out::println);
+        System.out.println("________________");
+        System.out.println("Homework:");
+        singleLinkedList.deleteAt(1);
+        System.out.println("Delete at index 1");
+        singleLinkedList.forEach(System.out::println);
+        singleLinkedList.deleteAt(2);
+        System.out.println("Delete at index 2");
+        singleLinkedList.forEach(System.out::println);
+
+        System.out.println("Use push, pop, enqueue, dequeue:");
+        singleLinkedList.deleteTail();
+        singleLinkedList.deleteTail();
+        singleLinkedList.deleteTail();
+        singleLinkedList.enqueue(1);
+        singleLinkedList.push(2);
+        singleLinkedList.enqueue(3);
+        singleLinkedList.push(4);
+        singleLinkedList.enqueue(5);
+        singleLinkedList.push(6);
+        singleLinkedList.enqueue(7);
+        singleLinkedList.push(8);
+        singleLinkedList.push(9);
+        singleLinkedList.insertAt(0, 11);
+        singleLinkedList.insertAt(4, 12);
+        singleLinkedList.insertAt(12, 13);
+
+        singleLinkedList.forEach(System.out::println);
+
+        singleLinkedList.deleteHead();
+        singleLinkedList.pop();
+
+        System.out.println("After delete head and tail");
+        singleLinkedList.forEach(System.out::println);
+
+        singleLinkedList.deleteHead();
+        singleLinkedList.pop();
+        singleLinkedList.deleteHead();
+        singleLinkedList.pop();
         singleLinkedList.deleteHead();
 
         System.out.println("After delete all");

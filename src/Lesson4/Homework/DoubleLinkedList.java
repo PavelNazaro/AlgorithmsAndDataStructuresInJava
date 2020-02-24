@@ -1,26 +1,37 @@
 package Lesson4.Homework;
 
-public class DoubleLinkedList<T> {
+import java.util.Iterator;
 
-    private Node<T> pre;
-    private Node<T> post;
+public class DoubleLinkedList<T> implements Iterable<T> {
+
+    private Node<T> head;
+    private Node<T> tail;
 
     public DoubleLinkedList() {
-        pre = new Node<>(null);
-        post = new Node<>(null);
-        pre.next = post;
-        post.prev = pre;
+        head = new Node<>(null);
+        tail = new Node<>(null);
+        head.next = tail;
+        tail.prev = head;
     }
 
     public void insertTail(T value) {
-        Node<T> last = post.prev;
         Node<T> newNode = new Node<>(value);
-        newNode.next = post;
-        newNode.prev = last;
+        if (head.value == null) {
+            head = tail = newNode;
+        } else {
+            tail.next = newNode;
+            tail = newNode;
+        }
     }
 
     public void insertHead(T value) {
-        //TODO реализовать в качестве ДЗ
+        Node<T> newNode = new Node<>(value);
+        if (tail.value == null) {
+            head = tail = newNode;
+        } else {
+            head.prev = newNode;
+            head = newNode;
+        }
     }
 
     public T deleteHead() {
@@ -35,6 +46,26 @@ public class DoubleLinkedList<T> {
 
     //TODO реализовать итератор в качестве ДЗ
 
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+
+            DoubleLinkedList.Node<T> curr = head;
+
+            @Override
+            public boolean hasNext() {
+                return curr != null;
+            }
+
+            @Override
+            public T next() {
+                T value = curr.value;
+                curr = curr.next;
+                return value;
+            }
+        };
+    }
+
     private static class Node<T> {
         T value;
         Node<T> prev;
@@ -43,5 +74,15 @@ public class DoubleLinkedList<T> {
         public Node(T value) {
             this.value = value;
         }
+    }
+
+    public static void main(String[] args) {
+        DoubleLinkedList<Integer> doubleLinkedList = new DoubleLinkedList<>();
+        doubleLinkedList.insertTail(3);
+        doubleLinkedList.insertTail(4);
+        doubleLinkedList.insertTail(5);
+        doubleLinkedList.insertHead(1);
+        doubleLinkedList.insertHead(2);
+        doubleLinkedList.forEach(System.out::println);
     }
 }
