@@ -4,57 +4,70 @@ import java.util.Iterator;
 
 public class DoubleLinkedList<T> implements Iterable<T> {
 
+    private int n = 0;
     private Node<T> head;
     private Node<T> tail;
 
-    public DoubleLinkedList() {
-        head = new Node<>(null);
-        tail = new Node<>(null);
-        head.next = tail;
-        tail.prev = head;
-    }
-
     public void insertTail(T value) {
         Node<T> newNode = new Node<>(value);
-        if (head.value == null) {
+        if (isEmpty()){
             head = tail = newNode;
         } else {
+            Node<T> curr = tail;
             tail.next = newNode;
             tail = newNode;
+            tail.prev = curr;
         }
+        n++;
     }
 
     public void insertHead(T value) {
         Node<T> newNode = new Node<>(value);
-        if (tail.value == null) {
+        if (isEmpty()){
             head = tail = newNode;
         } else {
+            Node<T> curr = head;
             head.prev = newNode;
             head = newNode;
+            head.next = curr;
         }
+        n++;
     }
 
     public T deleteHead() {
-        //TODO реализовать в качестве ДЗ
-        return null;
+        T deletedValue = head.value;
+        head = head.next;
+
+        if (head == null) {
+            tail = null;
+        }
+
+        n--;
+        return deletedValue;
     }
 
     public T deleteTail() {
-        //TODO реализовать в качестве ДЗ
-        return null;
-    }
+        T deletedValue = tail.value;
+        tail = tail.prev;
+        if (tail == null) {
+            head = null;
+        }
 
-    //TODO реализовать итератор в качестве ДЗ
+        n--;
+        return deletedValue;
+    }
 
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
 
             DoubleLinkedList.Node<T> curr = head;
+            int i = n;
 
             @Override
             public boolean hasNext() {
-                return curr != null;
+//                return curr != null;
+                return i-- > 0;
             }
 
             @Override
@@ -76,13 +89,27 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         }
     }
 
+    public boolean isEmpty() {
+        return n == 0;
+    }
+
+    public int size() {
+        return n;
+    }
+
     public static void main(String[] args) {
         DoubleLinkedList<Integer> doubleLinkedList = new DoubleLinkedList<>();
         doubleLinkedList.insertTail(3);
         doubleLinkedList.insertTail(4);
         doubleLinkedList.insertTail(5);
-        doubleLinkedList.insertHead(1);
         doubleLinkedList.insertHead(2);
+        doubleLinkedList.insertHead(1);
+        doubleLinkedList.forEach(System.out::println);
+        System.out.println("Delete head: " + doubleLinkedList.deleteHead());
+        doubleLinkedList.forEach(System.out::println);
+        System.out.println("Delete tail: " + doubleLinkedList.deleteTail());
+        doubleLinkedList.forEach(System.out::println);
+        System.out.println("Delete tail: " + doubleLinkedList.deleteTail());
         doubleLinkedList.forEach(System.out::println);
     }
 }
