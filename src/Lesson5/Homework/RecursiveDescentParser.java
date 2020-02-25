@@ -1,4 +1,4 @@
-package Lesson5.Lesson;
+package Lesson5.Homework;
 
 import java.util.Arrays;
 import java.util.List;
@@ -71,8 +71,8 @@ public class RecursiveDescentParser {
     private Double factor() {
         String next = tokens.get(pos);
         Double result;
+        pos++;
         if (next.equals("(")) {
-            pos++;
             result = expression();
             String closingBracket = null;
             if (pos < tokens.size() && (closingBracket = tokens.get(pos)).equals(")")) {
@@ -81,14 +81,28 @@ public class RecursiveDescentParser {
             }
             throw new IllegalStateException("')' expected but " + closingBracket);
         }
-        pos++;
+        if (next.equals("sin")){
+            return Math.sin(expression());
+        }
+        if (next.equals("cos")){
+            return Math.cos(expression());
+        }
+        if (next.equals("tg")){
+            return Math.tan(expression());
+        }
+        if (next.equals("ctg")){
+            return 1 / Math.tan(expression());
+        }
+        if (next.equals("ln")){
+            return Math.log(expression());
+        }
         return Double.parseDouble(next);
     }
 
     public static void main(String[] args) {
-        String expr = "2.111 * 3.5 + ( 3 + 4 * ( 2.1 + 3 ) - 10 ) * ( 5 - 7 + 4 - 2 ) + 11";
+        String expr = "2.111 * 3.5 + ( 3 + 4 * ( 2.1 + 3 ) - 10 ) * ( 5 - 6 + 4 - 2 + sin ( 100 ) ) + 11 + cos ( 12 + 1 )";
         RecursiveDescentParser recursiveDescentParser = new RecursiveDescentParser(Arrays.asList(expr.split(" ")));
         System.out.println(recursiveDescentParser.parse());
-        System.out.println(2.111*3.5+(3 + 4 * (2.1 + 3) - 10 )*(5-7+4-2) + 11);
+        System.out.println(2.111*3.5+(3 + 4 * (2.1 + 3) - 10 ) * (5 - 6 + 4 - 2 + Math.sin(100)) + 11 + Math.cos(12 + 1));
     }
 }

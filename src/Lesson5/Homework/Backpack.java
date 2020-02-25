@@ -1,4 +1,4 @@
-package Lesson5.Lesson;
+package Lesson5.Homework;
 
 public class Backpack {
 
@@ -17,9 +17,12 @@ public class Backpack {
         if (weight[itemNum] > w) {
             return recursive(weight, val, w,itemNum + 1);
         }
-        // TODO вычислить ценность для случаев, когда мы берем и не берем в рюкзак предмет
-        // TODO вернуть ценность для случая с наибольшей ценностью
-        return -1;
+        // вычислить ценность для случаев, когда мы берем и не берем в рюкзак предмет
+        int value = recursive(weight, val, w,itemNum + 1);
+        // вернуть ценность для случая с наибольшей ценностью
+        int maxValue = val[itemNum] + recursive(weight, val, w - weight[itemNum], itemNum + 1);
+
+        return Math.max(value, maxValue);
     }
 
     public static void main(String[] args) {
