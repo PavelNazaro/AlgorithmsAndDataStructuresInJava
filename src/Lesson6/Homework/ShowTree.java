@@ -1,11 +1,16 @@
 package Lesson6.Homework;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class ShowTree extends JFrame {
 
+    private static final int COUNT = 100;
+
     private JTree tree;
+
+    private static ArrayList<Boolean> resultList = new ArrayList<>();
 
     public ShowTree()
     {
@@ -15,7 +20,10 @@ public class ShowTree extends JFrame {
             bt.add(rnd.nextInt(200) - 100);
         }
 
-        bt.isBalanced();
+        boolean result = bt.isBalanced();
+        System.out.println(result);
+        setResultList(result);
+
         tree = new JTree(bt.buildSwingTree());
         JScrollPane treeView = new JScrollPane(tree);
         treeView.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -28,14 +36,31 @@ public class ShowTree extends JFrame {
         this.setVisible(true);
     }
 
-    public static void main(String[] args)
-    {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new ShowTree();
-            }
-        });
+    public static void main(String[] args) throws InterruptedException {
+        for (int i = 0; i < COUNT; i++) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new ShowTree();
+                }
+            });
+        }
+        Thread.sleep(COUNT * 100);
+        System.out.printf("Процент несбалансированных деревьев: %f%%", percent());
     }
 
+    private static float percent() {
+        float result = 0f;
+        for (Boolean bool : resultList){
+            if (!bool){
+                result += (float) 1 / resultList.size();
+            }
+        }
+
+        return result * 100;
+    }
+
+    public static void setResultList(boolean result) {
+        ShowTree.resultList.add(result);
+    }
 }
