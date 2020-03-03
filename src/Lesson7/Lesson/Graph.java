@@ -1,4 +1,4 @@
-package Lesson7;
+package Lesson7.Lesson;
 
 import java.util.*;
 
@@ -54,7 +54,7 @@ public class Graph {
         return visited;
     }
 
-    public Set<Vertex> breadthFirstSearch(Vertex root) {
+    public List<Vertex> breadthFirstSearch(Vertex root, Vertex dest) {
         Set<Vertex> visited = new LinkedHashSet<>();
         Queue<Vertex> queue = new LinkedList<>();
         queue.add(root);
@@ -65,10 +65,25 @@ public class Graph {
                 if (!visited.contains(v)) {
                     visited.add(v);
                     queue.add(v);
+                    v.setPrev(vert);
                 }
             }
         }
-        return visited;
+
+        Stack<Vertex> stack = new Stack<>();
+        Vertex curr = dest;
+        while (!curr.equals(root)){
+            stack.push(curr);
+            curr = curr.getPrev();
+        }
+        stack.push(root);
+
+        List<Vertex> result = new ArrayList<>();
+        while(!stack.isEmpty()){
+            result.add(stack.pop());
+        }
+
+        return result;
     }
 
     public static void main(String[] args) {
@@ -86,6 +101,6 @@ public class Graph {
         graph.addEdge("Rob", "Maria");
 
         System.out.println(graph.depthFirstSearch(new Vertex("Bob")));
-        System.out.println(graph.breadthFirstSearch(new Vertex("Bob")));
+        System.out.println(graph.breadthFirstSearch(new Vertex("Bob"), new Vertex("Mark")));
     }
 }

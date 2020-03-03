@@ -1,10 +1,12 @@
-package Lesson7;
+package Lesson7.Lesson;
 
 import java.util.Objects;
 
 public class Vertex {
 
     private final String label;
+
+    private Vertex prev;
 
     public Vertex(String label) {
         this.label = label;
@@ -26,5 +28,13 @@ public class Vertex {
     @Override
     public String toString() {
         return label;
+    }
+
+    public Vertex getPrev() {
+        return prev;
+    }
+
+    public void setPrev(Vertex prev) {
+        this.prev = prev;
     }
 }
