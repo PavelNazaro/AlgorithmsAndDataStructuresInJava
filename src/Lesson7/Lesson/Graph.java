@@ -6,12 +6,20 @@ public class Graph {
 
     private Map<Vertex, List<Vertex>> adjMap;
 
+    private Vertex[] vertexList;
+
+    private Queue<Integer> queue;
+
+    private int[][] adjMat;
+    private int size;
+
     public Graph() {
         this.adjMap = new HashMap<>();
     }
 
     public void addVertex(String label) {
         adjMap.putIfAbsent(new Vertex(label), new ArrayList<>());
+        vertexList[size++] = new Vertex(label);
     }
 
     public void removeVertex(String label) {
@@ -39,6 +47,11 @@ public class Graph {
             ev2.remove(v1);
         }
     }
+
+    public void displayVertex(int vertex) {
+        System.out.println(vertexList[vertex]);
+    }
+
 
     public Set<Vertex> depthFirstSearch(Vertex root) {
         Set<Vertex> visited = new LinkedHashSet<>();
@@ -72,19 +85,20 @@ public class Graph {
 
         Stack<Vertex> stack = new Stack<>();
         Vertex curr = dest;
-        while (!curr.equals(root)){
+        while (!curr.equals(root)) {
             stack.push(curr);
             curr = curr.getPrev();
         }
         stack.push(root);
 
         List<Vertex> result = new ArrayList<>();
-        while(!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             result.add(stack.pop());
         }
 
         return result;
     }
+
 
     public static void main(String[] args) {
         Graph graph = new Graph();
@@ -101,6 +115,6 @@ public class Graph {
         graph.addEdge("Rob", "Maria");
 
         System.out.println(graph.depthFirstSearch(new Vertex("Bob")));
-        System.out.println(graph.breadthFirstSearch(new Vertex("Bob"), new Vertex("Mark")));
+//        System.out.println(graph.breadthFirstSearch(new Vertex("Bob"), new Vertex("Mark")));
     }
 }

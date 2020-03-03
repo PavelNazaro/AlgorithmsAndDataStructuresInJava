@@ -4,12 +4,15 @@ import java.util.Objects;
 
 public class Vertex {
 
-    private final String label;
+    private String label;
 
     private Vertex prev;
 
+    public boolean wasVisited;
+
     public Vertex(String label) {
         this.label = label;
+        this.wasVisited = false;
     }
 
     @Override
